@@ -22,63 +22,63 @@ import javax.ws.rs.core.MediaType;
 
 /**
  *
- * @author thoma
+ * @author Ahmed-Al-Alaaq(Egelantier)
  */
 @Stateless
 @Path("address")
-public class AddressFacadeREST{
+public class AddressFacadeREST {
 
     @EJB
-    AddressFacade addressFacade;
+    AddressFacade addressDao;
 
     public AddressFacadeREST() {
-        
+
     }
 
     @POST
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void create(Address entity) {
-        addressFacade.create(entity);
+        addressDao.create(entity);
     }
 
     @PUT
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void edit(@PathParam("id") Long id, Address entity) {
-        addressFacade.edit(entity);
+        addressDao.edit(entity);
     }
 
     @DELETE
     @Path("{id}")
     public void remove(@PathParam("id") Long id) {
-        addressFacade.remove(addressFacade.find(id));
+        addressDao.remove(addressDao.find(id));
     }
 
     @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Address find(@PathParam("id") Long id) {
-        return addressFacade.find(id);
+        return addressDao.find(id);
     }
 
     @GET
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<Address> findAll() {
-        return addressFacade.findAll();
+        return addressDao.findAll();
     }
 
     @GET
     @Path("{from}/{to}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<Address> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
-        return addressFacade.findRange(new int[]{from, to});
+        return addressDao.findRange(new int[]{from, to});
     }
 
     @GET
     @Path("count")
     @Produces(MediaType.TEXT_PLAIN)
     public String countREST() {
-        return String.valueOf(addressFacade.count());
+        return String.valueOf(addressDao.count());
     }
-    
+
 }

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.workshop3.session;
+package com.workshop3.persistence;
 
 import java.util.List;
 import javax.persistence.EntityManager;

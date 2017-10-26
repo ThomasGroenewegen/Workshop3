@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.workshop3.session;
+package com.workshop3.persistence;
 
 import com.workshop3.domain.OrderItem;
 import javax.ejb.Stateless;

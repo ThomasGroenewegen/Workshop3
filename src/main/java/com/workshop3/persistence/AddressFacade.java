@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.workshop3.session;
+package com.workshop3.persistence;
 
-import com.workshop3.domain.Account;
+import com.workshop3.domain.Address;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,7 +15,7 @@ import javax.persistence.PersistenceContext;
  * @author hwkei
  */
 @Stateless
-public class AccountFacade extends AbstractFacade<Account> {
+public class AddressFacade extends AbstractFacade<Address> {
 
     @PersistenceContext(unitName = "com_Workshop3_war_1.0-SNAPSHOTPU")
     private EntityManager em;
@@ -25,8 +25,8 @@ public class AccountFacade extends AbstractFacade<Account> {
         return em;
     }
 
-    public AccountFacade() {
-        super(Account.class);
+    public AddressFacade() {
+        super(Address.class);
     }
     
 }

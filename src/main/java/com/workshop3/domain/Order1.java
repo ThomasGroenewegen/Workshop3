@@ -12,6 +12,8 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -51,7 +53,8 @@ public class Order1 implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateTime;
     @Column(name = "order_status")
-    private Integer orderStatus;
+    @Enumerated(EnumType.ORDINAL)
+    private OrderStatus orderStatus;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "total_price")
     private BigDecimal totalPrice;
@@ -84,11 +87,11 @@ public class Order1 implements Serializable {
         this.dateTime = dateTime;
     }
 
-    public Integer getOrderStatus() {
+    public OrderStatus getOrderStatus() {
         return orderStatus;
     }
 
-    public void setOrderStatus(Integer orderStatus) {
+    public void setOrderStatus(OrderStatus orderStatus) {
         this.orderStatus = orderStatus;
     }
 

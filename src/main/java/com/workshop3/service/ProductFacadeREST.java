@@ -28,7 +28,7 @@ import javax.ws.rs.core.MediaType;
  */
 @Stateless
 
-@Path("com.workshop3.domain.product")
+@Path("product")
 public class ProductFacadeREST {
 
     @EJB

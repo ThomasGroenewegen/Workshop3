@@ -10,6 +10,8 @@ import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -44,7 +46,8 @@ public class Account implements Serializable {
     @Column(name = "id")
     private Long id;
     @Column(name = "account_type")
-    private Integer accountType;
+    @Enumerated(EnumType.ORDINAL)
+    private AccountType accountType;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 250)
@@ -79,11 +82,11 @@ public class Account implements Serializable {
         this.id = id;
     }
 
-    public Integer getAccountType() {
+    public AccountType getAccountType() {
         return accountType;
     }
 
-    public void setAccountType(Integer accountType) {
+    public void setAccountType(AccountType accountType) {
         this.accountType = accountType;
     }
 

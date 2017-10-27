@@ -11,6 +11,8 @@ import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -53,7 +55,8 @@ public class Product implements Serializable {
     @Column(name = "stock")
     private Integer stock;
     @Column(name = "product_status")
-    private Integer productStatus;
+    @Enumerated(EnumType.ORDINAL)
+    private ProductStatus productStatus;
     @OneToMany(mappedBy = "productId")
     private Collection<OrderItem> orderItemCollection;
 
@@ -96,11 +99,11 @@ public class Product implements Serializable {
         this.stock = stock;
     }
 
-    public Integer getProductStatus() {
+    public ProductStatus getProductStatus() {
         return productStatus;
     }
 
-    public void setProductStatus(Integer productStatus) {
+    public void setProductStatus(ProductStatus productStatus) {
         this.productStatus = productStatus;
     }
 

@@ -9,6 +9,8 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -38,6 +40,10 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Address.findByStreetname", query = "SELECT a FROM Address a WHERE a.streetname = :streetname")})
 public class Address implements Serializable {
 
+    public enum AddressType {
+        POSTADRES, FACTUURADRES, BEZORGADRES
+    }
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,7 +54,8 @@ public class Address implements Serializable {
     @Column(name = "addition")
     private String addition;
     @Column(name = "address_type")
-    private Integer addressType;
+    @Enumerated(EnumType.ORDINAL)
+    private AddressType addressType;
     @Size(max = 255)
     @Column(name = "city")
     private String city;
@@ -87,11 +94,11 @@ public class Address implements Serializable {
         this.addition = addition;
     }
 
-    public Integer getAddressType() {
+    public AddressType getAddressType() {
         return addressType;
     }
 
-    public void setAddressType(Integer addressType) {
+    public void setAddressType(AddressType addressType) {
         this.addressType = addressType;
     }
 
@@ -159,5 +166,5 @@ public class Address implements Serializable {
     public String toString() {
         return "com.workshop3.domain.Address[ id=" + id + " ]";
     }
-    
+
 }

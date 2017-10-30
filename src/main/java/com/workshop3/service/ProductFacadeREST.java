@@ -56,6 +56,7 @@ public class ProductFacadeREST {
 
     @DELETE
     @Path("{id}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void remove(@PathParam("id") Long id) {
         productDao.remove(productDao.find(id));
     }

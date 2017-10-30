@@ -50,6 +50,7 @@ public class AddressFacadeREST {
 
     @DELETE
     @Path("{id}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void remove(@PathParam("id") Long id) {
         addressDao.remove(addressDao.find(id));
     }

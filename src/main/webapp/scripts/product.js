@@ -5,14 +5,14 @@
  */
 
 
-(document).ready(function(){
+$(document).ready(function(){
     getProducts();
 });
 
 function getProducts() {
     $.ajax({
         method: "GET",
-        url: "product",
+        url: "http://localhost:8080/Workshop3/webresources/product",
         dataType: "json",
         error: function (json, error) {
             console.log(error);

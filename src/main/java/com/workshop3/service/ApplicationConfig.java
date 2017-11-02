@@ -29,6 +29,7 @@ public class ApplicationConfig extends Application {
      * If required, comment out calling this method in getClasses().
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
+       
         resources.add(com.workshop3.service.AccountFacadeREST.class);
         resources.add(com.workshop3.service.AddressFacadeREST.class);
         resources.add(com.workshop3.service.CustomerFacadeREST.class);

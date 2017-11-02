@@ -41,7 +41,6 @@ public class ProductFacadeREST {
     }
 
     @POST
-
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void create(Product entity) {
         productDao.create(entity);
@@ -69,7 +68,6 @@ public class ProductFacadeREST {
     }
 
     @GET
-
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<Product> findAll() {
         return productDao.findAll();

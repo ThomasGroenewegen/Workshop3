@@ -38,7 +38,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Address.findByNumber", query = "SELECT a FROM Address a WHERE a.number = :number")
     , @NamedQuery(name = "Address.findByPostalcode", query = "SELECT a FROM Address a WHERE a.postalcode = :postalcode")
     , @NamedQuery(name = "Address.findByStreetname", query = "SELECT a FROM Address a WHERE a.streetname = :streetname")})
-public class Address implements Serializable {
+public class Address /*implements Serializable*/ {
 
     public enum AddressType {
         POSTADRES, FACTUURADRES, BEZORGADRES

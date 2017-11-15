@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author hwkei
+ * @author Ahmed-Al-Alaaq(Egelantier)
  */
 @Entity
 @Table(name = "product")

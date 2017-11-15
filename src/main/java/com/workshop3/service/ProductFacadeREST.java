@@ -20,6 +20,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ejb.EJB;
 import com.workshop3.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 import javax.ws.rs.core.MediaType;
 
 /**
@@ -87,4 +89,18 @@ public class ProductFacadeREST {
         return String.valueOf(productDao.count());
     }
 
+ 
+
 }
+  /*@GET
+    @Path("/get")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public Set<Product> findStatus() {
+       Set<Product> allProducts = new HashSet<Product>(productDao.findAll());
+       Set<Product> beschikken = null;
+       for (Product prod : allProducts){
+           if (prod.getProductStatus().equals("BESCHIKBAAR"))
+               beschikken.add(prod);
+       }
+        return beschikken;
+    }*/

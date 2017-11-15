@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author hwkei
+ * @author Ahmed-Al-Alaaq(Egelantier)
  */
 @Entity
 @Table(name = "address")

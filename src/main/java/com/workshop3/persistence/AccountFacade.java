@@ -9,6 +9,7 @@ import com.workshop3.domain.Account;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -27,6 +28,11 @@ public class AccountFacade extends AbstractFacade<Account> {
 
     public AccountFacade() {
         super(Account.class);
+    }
+    
+    public Account findByUsername(String userName) {
+        TypedQuery<Account> query = em.createNamedQuery("Account.findByUsername", Account.class);        
+        return query.setParameter("username", userName).getSingleResult();
     }
     
 }

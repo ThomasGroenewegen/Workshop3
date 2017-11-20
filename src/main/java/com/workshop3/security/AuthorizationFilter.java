@@ -6,6 +6,7 @@
 package com.workshop3.security;
 
 import com.workshop3.domain.AccountType;
+import java.util.Enumeration;
 import java.io.IOException;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -32,6 +33,11 @@ public class AuthorizationFilter implements Filter {
 //           errorPage = FilterConfig.getInitParameter("error_page");
         }
     }
+    
+    boolean validHeader(HttpServletRequest req) {
+       String requestLocation = req.getHeader("x-requested-with");
+       return requestLocation != null && requestLocation.equals("XMLHttpRequest");
+    }
 
     @Override
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {        
@@ -42,11 +48,12 @@ public class AuthorizationFilter implements Filter {
         
         System.out.println("IN FILTER with ROLE: " + role + " : " + request.getRequestURL());
         
-        if (AuthorizationManager.isUserAuthorized(role, request.getRequestURL().toString())) {
+        if (AuthorizationManager.isUserAuthorized(role, request.getRequestURL().toString(), 
+                request.getMethod().equals("GET"), validHeader(request))) {
             chain.doFilter(request, response);
         } else {
             response.setHeader("REQUIRES_AUTH", "1");
-            chain.doFilter(request, response);
+            response.sendRedirect("http://localhost:8080/login.html");
         }
     }
     

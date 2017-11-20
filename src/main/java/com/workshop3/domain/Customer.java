@@ -36,7 +36,8 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Customer.findById", query = "SELECT c FROM Customer c WHERE c.id = :id")
     , @NamedQuery(name = "Customer.findByFirstName", query = "SELECT c FROM Customer c WHERE c.firstName = :firstName")
     , @NamedQuery(name = "Customer.findByLastName", query = "SELECT c FROM Customer c WHERE c.lastName = :lastName")
-    , @NamedQuery(name = "Customer.findByLastNamePrefix", query = "SELECT c FROM Customer c WHERE c.lastNamePrefix = :lastNamePrefix")})
+    , @NamedQuery(name = "Customer.findByLastNamePrefix", query = "SELECT c FROM Customer c WHERE c.lastNamePrefix = :lastNamePrefix")
+    , @NamedQuery(name = "Customer.findByEmail", query = "SELECT c FROM Customer c WHERE c.email = :email")})
 public class Customer implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -55,6 +56,11 @@ public class Customer implements Serializable {
     @Size(min = 1, max = 16)
     @Column(name = "last_name")
     private String lastName;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 16)
+    @Column(name = "email")
+    private String email;
     @Size(max = 16)
     @Column(name = "last_name_prefix")
     private String lastNamePrefix;
@@ -101,6 +107,14 @@ public class Customer implements Serializable {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+    
+    public String getEmail() {
+        return email;
+    }
+    
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getLastNamePrefix() {

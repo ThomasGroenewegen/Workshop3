@@ -58,12 +58,12 @@ public class Customer implements Serializable {
     @Size(max = 16)
     @Column(name = "last_name_prefix")
     private String lastNamePrefix;
-    @OneToMany(mappedBy = "customerId")
+    @OneToMany(mappedBy = "customer")
     private Collection<Address> addressCollection;
     @JoinColumn(name = "account_id", referencedColumnName = "id")
     @ManyToOne
-    private Account accountId;
-    @OneToMany(mappedBy = "customerId")
+    private Account account;
+    @OneToMany(mappedBy = "customer")
     private Collection<Order1> order1Collection;
 
     public Customer() {
@@ -120,12 +120,12 @@ public class Customer implements Serializable {
         this.addressCollection = addressCollection;
     }
 
-    public Account getAccountId() {
-        return accountId;
+    public Account getAccount() {
+        return account;
     }
 
-    public void setAccountId(Account accountId) {
-        this.accountId = accountId;
+    public void setAccount(Account account) {
+        this.account = account;
     }
 
     @XmlTransient

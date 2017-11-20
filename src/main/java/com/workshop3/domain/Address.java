@@ -69,7 +69,7 @@ public class Address /*implements Serializable*/ {
     private String streetname;
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
     @ManyToOne
-    private Customer customerId;
+    private Customer customer;
 
     public Address() {
     }
@@ -134,12 +134,12 @@ public class Address /*implements Serializable*/ {
         this.streetname = streetname;
     }
 
-    public Customer getCustomerId() {
-        return customerId;
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public void setCustomerId(Customer customerId) {
-        this.customerId = customerId;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
     @Override

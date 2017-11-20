@@ -61,7 +61,7 @@ public class Product implements Serializable {
     @Column(name = "product_status")
     @Enumerated(EnumType.ORDINAL)
     private ProductStatus productStatus;
-    @OneToMany(mappedBy = "productId")
+    @OneToMany(mappedBy = "product")
     private Collection<OrderItem> orderItemCollection;
 
     public Product() {

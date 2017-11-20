@@ -50,10 +50,10 @@ public class OrderItem implements Serializable {
     private BigDecimal subTotal;
     @JoinColumn(name = "product_id", referencedColumnName = "id")
     @ManyToOne
-    private Product productId;
+    private Product product;
     @JoinColumn(name = "order_id", referencedColumnName = "id")
     @ManyToOne
-    private Order1 orderId;
+    private Order1 order;
 
     public OrderItem() {
     }
@@ -91,20 +91,20 @@ public class OrderItem implements Serializable {
         this.subTotal = subTotal;
     }
 
-    public Product getProductId() {
-        return productId;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setProductId(Product productId) {
-        this.productId = productId;
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
-    public Order1 getOrderId() {
-        return orderId;
+    public Order1 getOrder() {
+        return order;
     }
 
-    public void setOrderId(Order1 orderId) {
-        this.orderId = orderId;
+    public void setOrder(Order1 order) {
+        this.order = order;
     }
 
     @Override

@@ -58,7 +58,7 @@ public class Account implements Serializable {
     @Size(min = 1, max = 16)
     @Column(name = "username")
     private String username;
-    @OneToMany(mappedBy = "accountId")
+    @OneToMany(mappedBy = "account")
     private Collection<Customer> customerCollection;
 
     public Account() {

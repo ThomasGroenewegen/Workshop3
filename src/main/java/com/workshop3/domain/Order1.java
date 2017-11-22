@@ -103,7 +103,7 @@ public class Order1 implements Serializable {
         this.totalPrice = totalPrice;
     }
 
-    @XmlTransient
+//    @XmlTransient
     public Collection<OrderItem> getOrderItemCollection() {
         return orderItemCollection;
     }

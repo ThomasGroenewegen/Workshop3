@@ -6,6 +6,8 @@
 package com.workshop3.persistence;
 
 import com.workshop3.domain.Order1;
+import com.workshop3.domain.OrderItem;
+import java.util.Collection;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -29,4 +31,12 @@ public class Order1Facade extends AbstractFacade<Order1> {
         super(Order1.class);
     }
     
+    public void createOrder(Order1 order) {        
+        
+        em.persist(order);
+        for(OrderItem orderItem: order.getOrderItemCollection()) {
+            orderItem.setOrder(order);
+            em.persist(orderItem);
+        }
+    }    
 }

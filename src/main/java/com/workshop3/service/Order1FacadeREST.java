@@ -6,7 +6,11 @@
 package com.workshop3.service;
 
 import com.workshop3.domain.Order1;
+import com.workshop3.domain.OrderStatus;
+import com.workshop3.persistence.CustomerFacade;
 import com.workshop3.persistence.Order1Facade;
+import com.workshop3.persistence.OrderItemFacade;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -26,19 +30,31 @@ import javax.ws.rs.core.MediaType;
  */
 @Stateless
 @Path("order1")
-public class Order1FacadeREST{
+public class Order1FacadeREST {
 
     @EJB
     Order1Facade order1Facade;
 
+    @EJB
+    CustomerFacade customerFacade;
+
+    @EJB
+    OrderItemFacade orderItemFacade;
+
     public Order1FacadeREST() {
-        
+
     }
 
     @POST
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void create(Order1 entity) {
-        order1Facade.create(entity);
+        entity.setOrderStatus(OrderStatus.NIEUW);
+        entity.setDateTime(new Date());
+        
+        System.out.println("AANTAL PRODUCTEN: " + entity.getOrderItemCollection().size());
+        
+        // custom method to save order and orderItems together
+        order1Facade.createOrder(entity);
     }
 
     @PUT
@@ -80,5 +96,5 @@ public class Order1FacadeREST{
     public String countREST() {
         return String.valueOf(order1Facade.count());
     }
-    
+
 }

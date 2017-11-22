@@ -17,12 +17,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -58,8 +56,6 @@ public class Account implements Serializable {
     @Size(min = 1, max = 16)
     @Column(name = "username")
     private String username;
-    @OneToMany(mappedBy = "account")
-    private Collection<Customer> customerCollection;
 
     public Account() {
     }
@@ -104,15 +100,6 @@ public class Account implements Serializable {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    @XmlTransient
-    public Collection<Customer> getCustomerCollection() {
-        return customerCollection;
-    }
-
-    public void setCustomerCollection(Collection<Customer> customerCollection) {
-        this.customerCollection = customerCollection;
     }
 
     @Override

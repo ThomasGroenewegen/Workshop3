@@ -46,8 +46,6 @@ public class AuthorizationFilter implements Filter {
         
         String role = getUserRole(request);
         
-        System.out.println("IN FILTER with ROLE: " + role + " : " + request.getRequestURL());
-        
         if (AuthorizationManager.isUserAuthorized(role, request.getRequestURL().toString(), 
                 request.getMethod().equals("GET"), validHeader(request))) {
             chain.doFilter(request, response);

@@ -14,10 +14,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -58,7 +58,7 @@ public class Customer implements Serializable {
     private String lastName;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 16)
+    @Size(min = 1, max = 45)
     @Column(name = "email")
     private String email;
     @Size(max = 16)
@@ -67,7 +67,7 @@ public class Customer implements Serializable {
     @OneToMany(mappedBy = "customer")
     private Collection<Address> addressCollection;
     @JoinColumn(name = "account_id", referencedColumnName = "id")
-    @ManyToOne
+    @OneToOne
     private Account account;
     @OneToMany(mappedBy = "customer")
     private Collection<Order1> order1Collection;

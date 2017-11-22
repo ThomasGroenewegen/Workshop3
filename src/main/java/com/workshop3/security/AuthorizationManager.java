@@ -26,7 +26,13 @@ public class AuthorizationManager {
             if (uri.contains("home") || (uri.endsWith("/product") && get)
                     || (uri.endsWith("/login") && validHeader)) authorized = true;
         }
-        System.out.println("AUTHORIZATION MANAGER: " + uri + " : " + authorized);
+        // Output for debugging
+        System.out.println("IN AUTHORIZATION MANAGER: \n" 
+                + "        ROLE: " + accountType + "\n"
+                + "        URI: " + uri + "\n" 
+                + "        GET: " + get + "\n"
+                + "        VALID HEADER : " + validHeader + "\n"
+                + "        RESULTING AUTHORISATION : " + authorized);
         return authorized;
     }
 }

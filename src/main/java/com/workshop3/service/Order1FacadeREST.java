@@ -54,7 +54,7 @@ public class Order1FacadeREST {
         System.out.println("AANTAL PRODUCTEN: " + entity.getOrderItemCollection().size());
         
         // custom method to save order and orderItems together
-        order1Facade.createOrder(entity);
+        order1Facade.createOrder(entity, entity.getOrderItemCollection());
     }
 
     @PUT

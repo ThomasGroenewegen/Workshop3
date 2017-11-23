@@ -51,9 +51,6 @@ public class OrderItem implements Serializable {
     @JoinColumn(name = "product_id", referencedColumnName = "id")
     @ManyToOne
     private Product product;
-    @JoinColumn(name = "order_id", referencedColumnName = "id")
-    @ManyToOne
-    private Order1 order;
 
     public OrderItem() {
     }
@@ -97,14 +94,6 @@ public class OrderItem implements Serializable {
 
     public void setProduct(Product product) {
         this.product = product;
-    }
-
-    public Order1 getOrder() {
-        return order;
-    }
-
-    public void setOrder(Order1 order) {
-        this.order = order;
     }
 
     @Override

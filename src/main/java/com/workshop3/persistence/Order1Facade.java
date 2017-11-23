@@ -31,11 +31,10 @@ public class Order1Facade extends AbstractFacade<Order1> {
         super(Order1.class);
     }
     
-    public void createOrder(Order1 order) {        
+    public void createOrder(Order1 order, Collection<OrderItem> orderItemCollection) {        
         
         em.persist(order);
-        for(OrderItem orderItem: order.getOrderItemCollection()) {
-            orderItem.setOrder(order);
+        for(OrderItem orderItem: orderItemCollection) {
             em.persist(orderItem);
         }
     }    

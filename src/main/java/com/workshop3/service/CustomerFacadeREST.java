@@ -5,7 +5,9 @@
  */
 package com.workshop3.service;
 
+import com.workshop3.domain.Address;
 import com.workshop3.domain.Customer;
+import com.workshop3.persistence.AddressFacade;
 import com.workshop3.persistence.CustomerFacade;
 import java.util.List;
 import javax.ejb.EJB;
@@ -30,6 +32,9 @@ public class CustomerFacadeREST{
 
     @EJB
     CustomerFacade customerFacade;
+    
+    @EJB
+    AddressFacade addressFacade;
 
     public CustomerFacadeREST() {
         
@@ -79,6 +84,13 @@ public class CustomerFacadeREST{
     @Produces(MediaType.TEXT_PLAIN)
     public String countREST() {
         return String.valueOf(customerFacade.count());
+    }
+    
+    @GET
+    @Path("{id}/addresses")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Address> findAddresses(@PathParam("id") Long id) {
+        return addressFacade.getAddressesCustomer(id);
     }
     
 }

@@ -6,6 +6,8 @@
 package com.workshop3.persistence;
 
 import com.workshop3.domain.Address;
+import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -27,6 +29,16 @@ public class AddressFacade extends AbstractFacade<Address> {
 
     public AddressFacade() {
         super(Address.class);
+    }
+    
+    public List<Address> getAddressesCustomer(Long customerId) {
+        List<Address> addressList = new ArrayList<>();
+        for (Address address : findAll()) {
+            if (address.getCustomer().getId() == customerId) {
+                addressList.add(address);
+            }
+        }
+        return addressList;
     }
     
 }

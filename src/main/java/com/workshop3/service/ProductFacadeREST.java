@@ -34,7 +34,7 @@ import javax.ws.rs.core.MediaType;
 public class ProductFacadeREST {
 
     @EJB
-    ProductFacade productDao;
+    ProductFacade productFacade;
 
     /*@PersistenceContext(unitName = "com_Workshop3_war_1.0-SNAPSHOTPU")
     private EntityManager em;*/
@@ -45,48 +45,56 @@ public class ProductFacadeREST {
     @POST
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void create(Product entity) {
-        productDao.create(entity);
+        productFacade.create(entity);
     }
 
     @PUT
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void edit(@PathParam("id") Long id, Product entity) {
-        productDao.edit(entity);
+        productFacade.edit(entity);
     }
 
     @DELETE
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void remove(@PathParam("id") Long id) {
-        productDao.remove(productDao.find(id));
+        productFacade.remove(productFacade.find(id));
     }
 
     @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Product find(@PathParam("id") Long id) {
-        return productDao.find(id);
+        return productFacade.find(id);
     }
-
+    
     @GET
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<Product> findAll() {
-        return productDao.findAll();
+        return productFacade.findAll();
+    }
+    
+    @GET
+    @Path("/available")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Product> findAllAvailable() {
+        System.out.println("METHOD FIND ALL AVAILABLE WAS CALLED");
+        return productFacade.findAllAvailable();
     }
 
     @GET
     @Path("{from}/{to}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<Product> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
-        return productDao.findRange(new int[]{from, to});
+        return productFacade.findRange(new int[]{from, to});
     }
 
     @GET
     @Path("count")
     @Produces(MediaType.TEXT_PLAIN)
     public String countREST() {
-        return String.valueOf(productDao.count());
+        return String.valueOf(productFacade.count());
     }
 
  
@@ -96,7 +104,7 @@ public class ProductFacadeREST {
     @Path("/get")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Set<Product> findStatus() {
-       Set<Product> allProducts = new HashSet<Product>(productDao.findAll());
+       Set<Product> allProducts = new HashSet<Product>(productFacade.findAll());
        Set<Product> beschikken = null;
        for (Product prod : allProducts){
            if (prod.getProductStatus().equals("BESCHIKBAAR"))

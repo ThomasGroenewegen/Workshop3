@@ -6,9 +6,12 @@
 package com.workshop3.persistence;
 
 import com.workshop3.domain.Product;
+import com.workshop3.domain.Product.ProductStatus;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -28,5 +31,10 @@ public class ProductFacade extends AbstractFacade<Product> {
     public ProductFacade() {
         super(Product.class);
     }
-    
+
+    public List<Product> findAllAvailable() {
+        TypedQuery query = em.createNamedQuery("Product.findByProductStatus", Product.class);
+        query.setParameter("productStatus", ProductStatus.BESCHIKBAAR);
+        return query.getResultList();      
+    }
 }

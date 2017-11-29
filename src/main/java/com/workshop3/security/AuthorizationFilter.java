@@ -44,18 +44,18 @@ public class AuthorizationFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
         
-        String role = getUserRole(request);
+        String jwt = getJWToken(request); // Hele token wordt meegestuurd aan AuthorizationManager
         
-        if (AuthorizationManager.isUserAuthorized(role, request.getRequestURL().toString(), 
+        if (AuthorizationManager.isUserAuthorized(jwt, request.getRequestURL().toString(), 
                 request.getMethod().equals("GET"), validHeader(request))) {
             chain.doFilter(request, response);
         } else {
             response.setHeader("REQUIRES_AUTH", "1");
-            response.sendRedirect("http://localhost:8080/login.html");
+//            response.sendRedirect("http://localhost:8080/login.html");
         }
     }
     
-    private String getUserRole(HttpServletRequest request) {
+    private String getJWToken(HttpServletRequest request) {
         
         Cookie[] cookies = request.getCookies();
         
@@ -64,7 +64,7 @@ public class AuthorizationFilter implements Filter {
         
         for (Cookie cookie : cookies) {
             if (cookie.getName().equals("jwt")) {
-                return JWToken.parseRoleFromJWT(cookie.getValue());
+                return cookie.getValue();
             }
         }
         return "NONE"; // No jwt found so not logged in

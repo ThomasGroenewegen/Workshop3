@@ -36,14 +36,14 @@ public class AccountFacadeREST {
     }
 
     @POST
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON})
     public void create(Account entity) {
         accountFacade.create(entity);
     }
 
     @PUT
     @Path("{id}")
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON})
     public void edit(@PathParam("id") Long id, Account entity) {
         accountFacade.edit(entity);
     }
@@ -56,20 +56,20 @@ public class AccountFacadeREST {
 
     @GET
     @Path("{id}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
     public Account find(@PathParam("id") Long id) {
         return accountFacade.find(id);
     }
 
     @GET
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
     public List<Account> findAll() {
         return accountFacade.findAll();
     }
 
     @GET
     @Path("{from}/{to}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
     public List<Account> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
         return accountFacade.findRange(new int[]{from, to});
     }
@@ -79,6 +79,20 @@ public class AccountFacadeREST {
     @Produces(MediaType.TEXT_PLAIN)
     public String countREST() {
         return String.valueOf(accountFacade.count());
+    }
+    
+    @GET
+    @Path("my_details/{username}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Account findMyDetails(@PathParam("username") String username) {
+        return accountFacade.findByUsername(username);
+    }
+    
+    @PUT
+    @Path("cp")
+    @Consumes({MediaType.APPLICATION_JSON})
+    public void changePassword(Account entity) {
+        accountFacade.changePassword(entity);
     }
     
 }

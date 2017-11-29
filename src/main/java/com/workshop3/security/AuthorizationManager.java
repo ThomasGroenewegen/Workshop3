@@ -11,24 +11,71 @@ package com.workshop3.security;
  */
 public class AuthorizationManager {
     
-    static public boolean isUserAuthorized(String accountType, String uri, boolean get, boolean validHeader) {
+    static public boolean isUserAuthorized(String jwt, String uri, boolean get, boolean validHeader) {
         
-        boolean authorized = false;
-        // TODO verder uitwerken voor KLANT en MEDEWERKER
-        if (accountType.equals("ADMIN") && validHeader) authorized = true;
-        if (accountType.equals("MEDEWERKER")) {
-            if (uri.contains("account") || !validHeader) {
-                authorized = false;
-            } else authorized = true;
+        // Bepaal de user en role die in het cookie zijn meegegeven
+        String user = null;
+        String role = "NONE";
+        if (!jwt.equals("NONE")) {
+            role = JWToken.parseRoleFromJWT(jwt);
+            user = JWToken.parseUsernameFromJWT(jwt);
         }
-        if (accountType.equals("NONE")) {
-            // when not logged only allow:
+        // TODO: deze rollen moeten nog goed uitgewerkt worden!
+        // Default is not authorized, elke authorisatie wordt expliciet gegeven
+        boolean authorized = false;
+        switch(role) {
+            case "ADMIN": {
+                if (validHeader) authorized = true;
+                break;
+            }
+            case "MEDEWERKER": {
+                if (!validHeader) {
+                    authorized = false;
+                } else {
+                    if (uri.endsWith("login")) authorized = true;
+                    // Allow account only for the own page 
+                    if (uri.contains("account")) {
+                        if (uri.endsWith(user)) {
+                            authorized = true;
+                        }
+                    } else {
+                        authorized = true;
+                    }
+                    // for password change:
+                    if (uri.endsWith("account/cp")) authorized = true;
+                }
+                break;
+            }
+            case "KLANT": {
+                if (!validHeader) {
+                    authorized = false;
+                } else {
+                    if (uri.endsWith("/product") && get) authorized = true;
+                    if (uri.endsWith("login")) authorized = true;
+                    // Allow account only for the own page 
+                    if (uri.contains("account")) {
+                        if (uri.endsWith(user)) {
+                            authorized = true;
+                        } else {
+                            authorized = false;
+                        }
+                    }
+                    // for password change:
+                    if (uri.endsWith("account/cp")) authorized = true;
+                }
+                break;
+            }
+            case "NONE": {
             if (uri.contains("home") || (uri.endsWith("/product") && get)
                     || (uri.endsWith("/login") && validHeader)) authorized = true;
+                break;
+            }
         }
+        
         // Output for debugging
-        System.out.println("IN AUTHORIZATION MANAGER: \n" 
-                + "        ROLE: " + accountType + "\n"
+        System.out.println("IN AUTHORIZATION MANAGER: \n"
+                + "        USER: " + user + "\n"
+                + "        ROLE: " + role + "\n"
                 + "        URI: " + uri + "\n" 
                 + "        GET: " + get + "\n"
                 + "        VALID HEADER : " + validHeader + "\n"

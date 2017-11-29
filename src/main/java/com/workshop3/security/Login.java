@@ -38,7 +38,7 @@ public class Login extends HttpServlet {
         
         Account account = accountFacade.findByUsername(jObj.getString("username"));
         if (PasswordHash.validatePassword(jObj.getString("password"), account.getPassword())) {
-            System.out.println("User " + jObj.getString("username") + " succesvol gevalideerd" );
+            System.out.println("User " + jObj.getString("username") + " succesvol gevalideerd met wachtwoord " + jObj.getString("password") );
             String jwtToken = JWToken.createJWT(
                 jObj.getString("username"), 
                 "ApplikaasieClient", 
@@ -51,7 +51,7 @@ public class Login extends HttpServlet {
             if (getCookie(request, "jwt") != null) {
                 cookie.setMaxAge(0);
                 cookie.setValue(null);
-                System.out.println("Cookie deleted");
+                System.out.println("Cookie replaced");
             } 
             
             cookie = new Cookie("jwt", jwtToken);
@@ -60,7 +60,7 @@ public class Login extends HttpServlet {
             cookie.setHttpOnly(true);
             response.addCookie(cookie);
          
-        }        
+        } else System.out.println("AUTHENTICATION FAILED with password : " + jObj.getString("password"));     
     }
     
     public static Cookie getCookie(HttpServletRequest request, String name) {

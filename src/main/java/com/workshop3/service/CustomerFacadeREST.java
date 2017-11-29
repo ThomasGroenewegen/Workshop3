@@ -36,19 +36,18 @@ public class CustomerFacadeREST{
     @EJB
     AddressFacade addressFacade;
 
-    public CustomerFacadeREST() {
-        
+    public CustomerFacadeREST() {        
     }
 
     @POST
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON})
     public void create(Customer entity) {
         customerFacade.create(entity);
     }
 
     @PUT
     @Path("{id}")
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON})
     public void edit(@PathParam("id") Long id, Customer entity) {
         customerFacade.edit(entity);
     }
@@ -61,20 +60,20 @@ public class CustomerFacadeREST{
 
     @GET
     @Path("{id}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
     public Customer find(@PathParam("id") Long id) {
         return customerFacade.find(id);
     }
 
     @GET
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
     public List<Customer> findAll() {
         return customerFacade.findAll();
     }
 
     @GET
     @Path("{from}/{to}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
     public List<Customer> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
         return customerFacade.findRange(new int[]{from, to});
     }

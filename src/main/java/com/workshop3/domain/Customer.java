@@ -8,6 +8,7 @@ package com.workshop3.domain;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -68,7 +69,7 @@ public class Customer implements Serializable {
     @OneToMany(mappedBy = "customer")
     private Collection<Address> addressCollection;
     @JoinColumn(name = "account_id", referencedColumnName = "id")
-    @OneToOne
+    @OneToOne(cascade=CascadeType.PERSIST)
     private Account account;
     @OneToMany(mappedBy = "customer")
     private Collection<Order1> order1Collection;

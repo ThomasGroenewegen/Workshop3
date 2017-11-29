@@ -42,6 +42,7 @@ public class CustomerFacadeREST{
     @POST
     @Consumes({MediaType.APPLICATION_JSON})
     public void create(Customer entity) {
+        // Hash
         customerFacade.create(entity);
     }
 

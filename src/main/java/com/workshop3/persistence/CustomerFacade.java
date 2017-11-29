@@ -6,6 +6,7 @@
 package com.workshop3.persistence;
 
 import com.workshop3.domain.Customer;
+import com.workshop3.security.PasswordHash;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -27,6 +28,13 @@ public class CustomerFacade extends AbstractFacade<Customer> {
 
     public CustomerFacade() {
         super(Customer.class);
+    }
+    
+    @Override
+    public void create(Customer customer) {
+        // Hash the password of the linked account before saving it to the database
+        customer.getAccount().setPassword(PasswordHash.generateHash(customer.getAccount().getPassword()));
+        getEntityManager().persist(customer);
     }
     
 }

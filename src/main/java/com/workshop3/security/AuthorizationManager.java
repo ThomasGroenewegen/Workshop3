@@ -25,10 +25,12 @@ public class AuthorizationManager {
         boolean authorized = false;
         switch(role) {
             case "ADMIN": {
+                // Admin can do all
                 if (validHeader) authorized = true;
                 break;
             }
             case "MEDEWERKER": {
+                // MEDEWERKER can do all except some account parts
                 if (!validHeader) {
                     authorized = false;
                 } else {

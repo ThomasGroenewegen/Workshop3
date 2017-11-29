@@ -37,9 +37,16 @@ public class AccountFacade extends AbstractFacade<Account> {
     }
     
     public void changePassword(Account account) {
-        String password = account.getPassword();
-        account.setPassword(PasswordHash.generateHash(password));
+        // Hash the password before saving it to the database
+        account.setPassword(PasswordHash.generateHash(account.getPassword()));
         edit(account);
+    }
+    
+    @Override
+    public void create(Account account) {
+        // Hash the password before saving it to the database
+        account.setPassword(PasswordHash.generateHash(account.getPassword()));
+        getEntityManager().persist(account);
     }
     
 }

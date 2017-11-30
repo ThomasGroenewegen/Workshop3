@@ -37,7 +37,7 @@ public class Login extends HttpServlet {
         JSONObject jObj = new JSONObject(request.getReader().readLine());
         
         Account account = accountFacade.findByUsername(jObj.getString("username"));
-        if (PasswordHash.validatePassword(jObj.getString("password"), account.getPassword())) {
+        if (account != null && PasswordHash.validatePassword(jObj.getString("password"), account.getPassword())) {
             System.out.println("User " + jObj.getString("username") + " succesvol gevalideerd met wachtwoord " + jObj.getString("password") );
             String jwtToken = JWToken.createJWT(
                 jObj.getString("username"), 
@@ -60,7 +60,10 @@ public class Login extends HttpServlet {
             cookie.setHttpOnly(true);
             response.addCookie(cookie);
          
-        } else System.out.println("AUTHENTICATION FAILED with password : " + jObj.getString("password"));     
+        } else {
+            response.setHeader("AUTH_FAILED", "1");
+            System.out.println("AUTHENTICATION FAILED");
+        }     
     }
     
     public static Cookie getCookie(HttpServletRequest request, String name) {

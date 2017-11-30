@@ -7,6 +7,7 @@ package com.workshop3.persistence;
 
 import com.workshop3.domain.Account;
 import com.workshop3.security.PasswordHash;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -32,8 +33,11 @@ public class AccountFacade extends AbstractFacade<Account> {
     }
     
     public Account findByUsername(String userName) {
-        TypedQuery<Account> query = em.createNamedQuery("Account.findByUsername", Account.class);        
-        return query.setParameter("username", userName).getSingleResult();
+        TypedQuery<Account> query = em.createNamedQuery("Account.findByUsername", Account.class);
+        List<Account> accountList = query.setParameter("username", userName).getResultList();
+        if (accountList.size() == 1) {
+            return accountList.get(0);
+        } else return null;
     }
     
     public void changePassword(Account account) {

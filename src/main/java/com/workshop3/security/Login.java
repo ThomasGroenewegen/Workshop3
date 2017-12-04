@@ -7,10 +7,7 @@ package com.workshop3.security;
 
 import com.workshop3.domain.Account;
 import com.workshop3.persistence.AccountFacade;
-import com.workshop3.security.JWToken;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Iterator;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -59,6 +56,8 @@ public class Login extends HttpServlet {
             cookie.setPath("/");
             cookie.setHttpOnly(true);
             response.addCookie(cookie);
+			
+	    response.setHeader("ROLE", JWToken.parseRoleFromJWT(jwtToken));
          
         } else {
             response.setHeader("AUTH_FAILED", "1");

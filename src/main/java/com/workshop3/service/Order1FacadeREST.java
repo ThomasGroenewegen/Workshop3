@@ -6,10 +6,13 @@
 package com.workshop3.service;
 
 import com.workshop3.domain.Order1;
+import com.workshop3.domain.OrderItem;
 import com.workshop3.domain.OrderStatus;
+import com.workshop3.domain.Product;
 import com.workshop3.persistence.CustomerFacade;
 import com.workshop3.persistence.Order1Facade;
 import com.workshop3.persistence.OrderItemFacade;
+import com.workshop3.persistence.ProductFacade;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
@@ -40,6 +43,9 @@ public class Order1FacadeREST {
 
     @EJB
     OrderItemFacade orderItemFacade;
+    
+    @EJB
+    ProductFacade productFacade;
 
     public Order1FacadeREST() {
 
@@ -55,6 +61,10 @@ public class Order1FacadeREST {
         
         // custom method to save order and orderItems together
         order1Facade.createOrder(entity, entity.getOrderItemCollection());
+        
+        for(OrderItem orderItem: entity.getOrderItemCollection()) {
+            updateProductStockAfterAddingOrderItem(orderItem);
+        }
     }
 
     @PUT
@@ -95,6 +105,17 @@ public class Order1FacadeREST {
     @Produces(MediaType.TEXT_PLAIN)
     public String countREST() {
         return String.valueOf(order1Facade.count());
+    }
+    
+    protected void updateProductStockAfterAddingOrderItem(OrderItem orderItem) {
+
+        Product product = productFacade.find(orderItem.getProduct().getId());
+
+        int amount = orderItem.getAmount();
+        int oldStock = product.getStock();
+        product.setStock(oldStock - amount);
+
+        productFacade.edit(product);
     }
 
 }

@@ -53,6 +53,7 @@ public class AuthorizationManager {
                     authorized = false;
                 } else {
                     if (uri.endsWith("/product") && get) authorized = true;
+                    if (uri.endsWith("/product/available") && get) authorized = true;
                     if (uri.endsWith("login")) authorized = true;
                     // Allow account only for the own page 
                     if (uri.contains("account")) {

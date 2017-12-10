@@ -55,6 +55,7 @@ public class AuthorizationManager {
                     if (uri.endsWith("/product") && get) authorized = true;
                     if (uri.endsWith("/product/available") && get) authorized = true;
                     if (uri.endsWith("login")) authorized = true;
+                    if (uri.contains("order1")) authorized = true;
                     // Allow account only for the own page 
                     if (uri.contains("account")) {
                         if (uri.endsWith(user)) {

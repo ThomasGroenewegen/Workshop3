@@ -9,6 +9,7 @@ import com.workshop3.domain.Order1;
 import com.workshop3.domain.OrderItem;
 import com.workshop3.domain.OrderStatus;
 import com.workshop3.domain.Product;
+import static com.workshop3.domain.Product.ProductStatus.ONBESCHIKBAAR;
 import com.workshop3.persistence.CustomerFacade;
 import com.workshop3.persistence.Order1Facade;
 import com.workshop3.persistence.OrderItemFacade;
@@ -114,6 +115,10 @@ public class Order1FacadeREST {
         int amount = orderItem.getAmount();
         int oldStock = product.getStock();
         product.setStock(oldStock - amount);
+        
+        if(product.getStock() == 0) {
+            product.setProductStatus(ONBESCHIKBAAR);
+        }
 
         productFacade.edit(product);
     }

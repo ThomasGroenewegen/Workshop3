@@ -10,6 +10,7 @@ import com.workshop3.security.PasswordHash;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -36,5 +37,12 @@ public class CustomerFacade extends AbstractFacade<Customer> {
         customer.getAccount().setPassword(PasswordHash.generateHash(customer.getAccount().getPassword()));
         getEntityManager().persist(customer);
     }
-    
+
+    public Customer findByAccountId(Long id) {
+        Query query = em.createNamedQuery("Customer.findByAccountId", Customer.class);
+        query.setParameter("id", id);
+        Customer customer = (Customer)query.getSingleResult();
+        System.out.println("IN FindByAccountId, customer is: " + customer.toString());
+        return customer;
+    }    
 }

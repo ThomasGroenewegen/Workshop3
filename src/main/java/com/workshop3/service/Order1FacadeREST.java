@@ -67,6 +67,13 @@ public class Order1FacadeREST {
             updateProductStockAfterAddingOrderItem(orderItem);
         }
     }
+    
+    @POST
+    @Path("/{user}")
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public void createByCustomer(Order1 entity) {
+        create(entity);
+    }
 
     @PUT
     @Path("{id}")

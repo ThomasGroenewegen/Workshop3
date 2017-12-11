@@ -6,7 +6,10 @@
 package com.workshop3.security;
 
 import com.workshop3.domain.Account;
+import static com.workshop3.domain.AccountType.KLANT;
+import com.workshop3.domain.Customer;
 import com.workshop3.persistence.AccountFacade;
+import com.workshop3.persistence.CustomerFacade;
 import java.io.IOException;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -26,6 +29,9 @@ public class Login extends HttpServlet {
     
     @EJB
     AccountFacade accountFacade;
+    
+    @EJB
+    CustomerFacade customerFacade;
     
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -58,7 +64,13 @@ public class Login extends HttpServlet {
             response.addCookie(cookie);
 			
 	    response.setHeader("ROLE", JWToken.parseRoleFromJWT(jwtToken));
-         
+            
+            // Get the customer id, needed to save orders
+            if(account.getAccountType().equals(KLANT)) {
+                Customer customer = customerFacade.findByAccountId(account.getId());
+                response.setHeader("CUSTOMER_ID", customer.getId().toString());
+            }
+                    
         } else {
             response.setHeader("AUTH_FAILED", "1");
             System.out.println("AUTHENTICATION FAILED");

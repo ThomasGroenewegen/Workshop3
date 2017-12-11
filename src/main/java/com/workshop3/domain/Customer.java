@@ -39,7 +39,9 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Customer.findByFirstName", query = "SELECT c FROM Customer c WHERE c.firstName = :firstName")
     , @NamedQuery(name = "Customer.findByLastName", query = "SELECT c FROM Customer c WHERE c.lastName = :lastName")
     , @NamedQuery(name = "Customer.findByLastNamePrefix", query = "SELECT c FROM Customer c WHERE c.lastNamePrefix = :lastNamePrefix")
-    , @NamedQuery(name = "Customer.findByEmail", query = "SELECT c FROM Customer c WHERE c.email = :email")})
+    , @NamedQuery(name = "Customer.findByEmail", query = "SELECT c FROM Customer c WHERE c.email = :email")
+    , @NamedQuery(name = "Customer.findByAccountId", query = "SELECT c FROM Customer c WHERE c.account.id = :id")
+})
 public class Customer implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -69,7 +71,7 @@ public class Customer implements Serializable {
     @OneToMany(mappedBy = "customer")
     private Collection<Address> addressCollection;
     @JoinColumn(name = "account_id", referencedColumnName = "id")
-    @OneToOne(cascade=CascadeType.PERSIST)
+    @OneToOne(cascade = CascadeType.PERSIST)
     private Account account;
     @OneToMany(mappedBy = "customer")
     private Collection<Order1> order1Collection;
@@ -110,11 +112,11 @@ public class Customer implements Serializable {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
-    
+
     public String getEmail() {
         return email;
     }
-    
+
     public void setEmail(String email) {
         this.email = email;
     }
@@ -177,5 +179,5 @@ public class Customer implements Serializable {
     public String toString() {
         return "com.workshop3.domain.Customer[ id=" + id + " ]";
     }
-    
+
 }

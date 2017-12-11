@@ -77,7 +77,7 @@ public class AuthorizationManager {
                 break;
             }
             case "NONE": {
-            if (uri.contains("home") || (uri.endsWith("/product") && get)
+            if (uri.contains("home") || ((uri.endsWith("/product/available") && get))
                     || (uri.endsWith("/login") && validHeader)) authorized = true;
                 break;
             }

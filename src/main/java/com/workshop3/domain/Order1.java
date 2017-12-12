@@ -40,7 +40,8 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Order1.findById", query = "SELECT o FROM Order1 o WHERE o.id = :id")
     , @NamedQuery(name = "Order1.findByDateTime", query = "SELECT o FROM Order1 o WHERE o.dateTime = :dateTime")
     , @NamedQuery(name = "Order1.findByOrderStatus", query = "SELECT o FROM Order1 o WHERE o.orderStatus = :orderStatus")
-    , @NamedQuery(name = "Order1.findByTotalPrice", query = "SELECT o FROM Order1 o WHERE o.totalPrice = :totalPrice")})
+    , @NamedQuery(name = "Order1.findByTotalPrice", query = "SELECT o FROM Order1 o WHERE o.totalPrice = :totalPrice")
+    , @NamedQuery(name = "Order1.findAllByCustomerId", query = "SELECT o FROM Order1 o WHERE o.customer.id = :id")})
 public class Order1 implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -145,5 +146,5 @@ public class Order1 implements Serializable {
     public String toString() {
         return "com.workshop3.domain.Order1[ id=" + id + " ]";
     }
-    
+
 }

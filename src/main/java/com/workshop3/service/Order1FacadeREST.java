@@ -44,7 +44,7 @@ public class Order1FacadeREST {
 
     @EJB
     OrderItemFacade orderItemFacade;
-    
+
     @EJB
     ProductFacade productFacade;
 
@@ -57,17 +57,17 @@ public class Order1FacadeREST {
     public void create(Order1 entity) {
         entity.setOrderStatus(OrderStatus.NIEUW);
         entity.setDateTime(new Date());
-        
+
         System.out.println("AANTAL PRODUCTEN: " + entity.getOrderItemCollection().size());
-        
+
         // custom method to save order and orderItems together
         order1Facade.createOrder(entity, entity.getOrderItemCollection());
-        
-        for(OrderItem orderItem: entity.getOrderItemCollection()) {
+
+        for (OrderItem orderItem : entity.getOrderItemCollection()) {
             updateProductStockAfterAddingOrderItem(orderItem);
         }
     }
-    
+
     @POST
     @Path("/{user}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -102,10 +102,10 @@ public class Order1FacadeREST {
     }
 
     @GET
-    @Path("{from}/{to}")
+    @Path("/{id}/{user}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Order1> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
-        return order1Facade.findRange(new int[]{from, to});
+    public List<Order1> findAllByCustomer(@PathParam("id") Long id) {
+        return order1Facade.findAllByCustomer(id);
     }
 
     @GET
@@ -114,7 +114,7 @@ public class Order1FacadeREST {
     public String countREST() {
         return String.valueOf(order1Facade.count());
     }
-    
+
     protected void updateProductStockAfterAddingOrderItem(OrderItem orderItem) {
 
         Product product = productFacade.find(orderItem.getProduct().getId());
@@ -122,8 +122,8 @@ public class Order1FacadeREST {
         int amount = orderItem.getAmount();
         int oldStock = product.getStock();
         product.setStock(oldStock - amount);
-        
-        if(product.getStock() == 0) {
+
+        if (product.getStock() == 0) {
             product.setProductStatus(ONBESCHIKBAAR);
         }
 

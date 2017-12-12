@@ -8,9 +8,11 @@ package com.workshop3.persistence;
 import com.workshop3.domain.Order1;
 import com.workshop3.domain.OrderItem;
 import java.util.Collection;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -38,4 +40,12 @@ public class Order1Facade extends AbstractFacade<Order1> {
             em.persist(orderItem);
         }
     }    
+
+    public List<Order1> findAllByCustomer(Long id) {
+        TypedQuery query = em.createNamedQuery("Order1.findAllByCustomerId", Order1.class);
+        query.setParameter("id", id);
+        List<Order1> orderList = query.getResultList();
+        System.out.println("IN findAllByCustomer, orderList length is: " + orderList.size());
+        return orderList;
+    }
 }

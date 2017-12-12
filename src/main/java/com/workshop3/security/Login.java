@@ -11,6 +11,8 @@ import com.workshop3.domain.Customer;
 import com.workshop3.persistence.AccountFacade;
 import com.workshop3.persistence.CustomerFacade;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.util.Date;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -84,6 +86,10 @@ public class Login extends HttpServlet {
                 Customer customer = customerFacade.findByAccountId(account.getId());
                 response.setHeader("CUSTOMER_ID", customer.getId().toString());
             }
+            
+            // Set the last login time
+            account.setLastLogin(new Date());          
+            accountFacade.edit(account);
                     
         } else {
             response.setHeader("AUTH_FAILED", "1");

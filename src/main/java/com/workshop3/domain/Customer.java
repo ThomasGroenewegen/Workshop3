@@ -71,7 +71,7 @@ public class Customer implements Serializable {
     @OneToMany(mappedBy = "customer")
     private Collection<Address> addressCollection;
     @JoinColumn(name = "account_id", referencedColumnName = "id")
-    @OneToOne(cascade = CascadeType.PERSIST)
+    @OneToOne(cascade = CascadeType.ALL)
     private Account account;
     @OneToMany(mappedBy = "customer")
     private Collection<Order1> order1Collection;

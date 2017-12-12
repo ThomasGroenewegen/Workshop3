@@ -24,7 +24,7 @@ import org.json.JSONObject;
  *
  * @author hwkei
  */
-@WebServlet("/login")
+@WebServlet({"/login", "/logout"})
 public class Login extends HttpServlet {
     
     @EJB
@@ -33,6 +33,20 @@ public class Login extends HttpServlet {
     @EJB
     CustomerFacade customerFacade;
     
+	@Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException { 
+        response.setContentType("text/html;charset=UTF-8");
+        if (request.getRequestURI().contains("logout")) {
+            Cookie cookie = new Cookie("jwt", "");
+            cookie.setMaxAge(0);
+            cookie.setPath("/");
+            cookie.setHttpOnly(true);
+            response.addCookie(cookie);
+            System.out.println("Should delete cookie");
+        }
+    }
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

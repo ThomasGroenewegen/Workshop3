@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -59,7 +60,7 @@ public class Order1 implements Serializable {
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "total_price")
     private BigDecimal totalPrice;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "order_id")
     private Collection<OrderItem> orderItemCollection;
     @JoinColumn(name = "customer_id", referencedColumnName = "id")

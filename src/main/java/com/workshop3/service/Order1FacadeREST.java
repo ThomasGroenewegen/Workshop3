@@ -79,13 +79,21 @@ public class Order1FacadeREST {
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void edit(@PathParam("id") Long id, Order1 entity) {
-        order1Facade.edit(entity);
+        Order1 order = order1Facade.find(id);
+        order.setOrderStatus(entity.getOrderStatus());
+        order1Facade.edit(order);
     }
 
     @DELETE
     @Path("{id}")
     public void remove(@PathParam("id") Long id) {
-        order1Facade.remove(order1Facade.find(id));
+        Order1 order = order1Facade.find(id);
+        
+        order1Facade.remove(order);
+        
+        for (OrderItem orderItem : order.getOrderItemCollection()) {
+            updateProductStockAfterDeletingOrderItem(orderItem);
+        }
     }
 
     @GET
@@ -126,6 +134,17 @@ public class Order1FacadeREST {
         if (product.getStock() == 0) {
             product.setProductStatus(ONBESCHIKBAAR);
         }
+
+        productFacade.edit(product);
+    }
+    
+    protected void updateProductStockAfterDeletingOrderItem(OrderItem orderItem) {
+
+        Product product = productFacade.find(orderItem.getProduct().getId());
+
+        int amount = orderItem.getAmount();
+        int oldStock = product.getStock();
+        product.setStock(oldStock + amount);
 
         productFacade.edit(product);
     }

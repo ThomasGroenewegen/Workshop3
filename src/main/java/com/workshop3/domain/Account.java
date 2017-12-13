@@ -61,6 +61,9 @@ public class Account implements Serializable {
     @Column(name = "lastlogin")
     @Temporal(TemporalType.DATE)
     private Date lastLogin;
+    @Column(name = "lastchanged")
+    @Temporal(TemporalType.DATE)
+    private Date lastChanged;
 
     public Account() {
     }
@@ -115,6 +118,14 @@ public class Account implements Serializable {
         this.lastLogin = lastLogin;
     }
 
+    public Date getLastChanged() {
+        return lastChanged;
+    }
+
+    public void setLastChanged(Date lastChanged) {
+        this.lastChanged = lastChanged;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;
